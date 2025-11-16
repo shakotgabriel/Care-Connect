@@ -1,33 +1,60 @@
-import React from "react";
+'use client'
 
-const DoctorCard = ({ name, specialization, available, onProfileClick }) => {
+import { useState } from 'react'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../src/components/ui/card'
+import { Button } from '../../src/components/ui/button'
+import { Badge } from '../../src/components/ui/badge'
+import { Eye, Edit, Trash } from 'lucide-react'
+import { DoctorDetailsModal } from './doctor-details-modal'
+import React from 'react'
+
+interface Doctor {
+  id: string
+  name: string
+  specialization: string
+  email: string
+  phone: string
+}
+
+interface DoctorCardProps {
+  doctor: Doctor
+}
+
+export function DoctorCard({ doctor }: DoctorCardProps) {
+  const [isModalOpen, setModalOpen] = useState(false)
+
   return (
-    <div className="bg-gray-400 shadow-md p-4 rounded-xl border border-gray-100 flex flex-col gap-3 w-full max-w-sm">
-      
-   
-      <h2 className="text-xl font-semibold text-gray-800">{name}</h2>
+    <>
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle className='text-lg font-bold'>{doctor.name}</CardTitle>
+          <CardDescription>
+            <Badge>{doctor.specialization}</Badge> 
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Email: {doctor.email}</p>
+          <p>Phone: {doctor.phone}</p>
+        </CardContent>
+        <div className="flex justify-end gap-2 p-2">
+          <Button size="sm" variant="outline" onClick={() => setModalOpen(true)}>
+            <Eye className="mr-1 h-4 w-4" /> View
+          </Button>
+          <Button size="sm" variant="secondary">
+            <Edit className="mr-1 h-4 w-4" /> Edit
+          </Button>
+          <Button size="sm" variant="destructive">
+            <Trash className="mr-1 h-4 w-4" /> Delete
+          </Button>
+        </div>
+      </Card>
 
   
-      <p className="text-gray-600">{specialization}</p>
-
-
-      <span
-        className={`px-3 py-1 text-sm font-medium rounded-full w-fit ${
-          available ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"
-        }`}
-      >
-        {available ? "Available for Appointments" : "Not Available"}
-      </span>
-
-
-      <button
-        onClick={onProfileClick}
-        className="mt-2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
-      >
-        View Profile
-      </button>
-    </div>
-  );
-};
-
-export default DoctorCard;
+      <DoctorDetailsModal
+        doctor={doctor}
+        open={isModalOpen}
+        onClose={() => setModalOpen(false)}
+      />
+    </>
+  )
+}
