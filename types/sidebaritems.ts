@@ -7,5 +7,5 @@ export const sidebarItems = [
     { name: "Pharmacy", path: "/pharmacy" },
     { name: "Billing", path: "/billing" },
     { name: "Settings", path: "/settings" },
-    { name: "Log Out", path: "/logout" },
+
   ];

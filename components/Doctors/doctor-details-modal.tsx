@@ -1,16 +1,14 @@
-'use client'
-
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from '../../src/components/ui/dialog'
-import { Button } from '../../src/components//ui/button'
-import React from 'react'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../../src/components/ui/dialog'
+interface Doctor {
+  id: string
+  name: string
+  specialization: string
+  email: string
+  phone: string
+}
 
 interface DoctorDetailsModalProps {
-  doctor: {
-    name: string
-    specialization: string
-    email: string
-    phone: string
-  }
+  doctor: Doctor
   open: boolean
   onClose: () => void
 }
@@ -21,15 +19,21 @@ export function DoctorDetailsModal({ doctor, open, onClose }: DoctorDetailsModal
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{doctor.name}</DialogTitle>
-          <DialogDescription>
-            Specialization: {doctor.specialization} <br />
-            Email: {doctor.email} <br />
-            Phone: {doctor.phone}
-          </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
-          <Button onClick={onClose}>Close</Button>
-        </DialogFooter>
+        <div className="space-y-4">
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Specialization</p>
+            <p className="text-sm">{doctor.specialization}</p>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Email</p>
+            <p className="text-sm">{doctor.email}</p>
+          </div>
+          <div>
+            <p className="text-sm font-medium text-muted-foreground">Phone</p>
+            <p className="text-sm">{doctor.phone}</p>
+          </div>
+        </div>
       </DialogContent>
     </Dialog>
   )

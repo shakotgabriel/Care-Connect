@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../../src/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '../../src/components/ui/card'
 import { Button } from '../../src/components/ui/button'
 import { Badge } from '../../src/components/ui/badge'
 import { Eye, Edit, Trash } from 'lucide-react'
@@ -25,31 +25,41 @@ export function DoctorCard({ doctor }: DoctorCardProps) {
 
   return (
     <>
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle className='text-lg font-bold'>{doctor.name}</CardTitle>
-          <CardDescription>
-            <Badge>{doctor.specialization}</Badge> 
-          </CardDescription>
+      <Card className="w-full hover:shadow-md transition-shadow">
+        <CardHeader className="pb-3">
+         
+          <div className="space-y-2">
+            <CardTitle className="text-xl font-bold">{doctor.name}</CardTitle>
+            <Badge className="w-fit">{doctor.specialization}</Badge>
+          </div>
         </CardHeader>
-        <CardContent>
-          <p>Email: {doctor.email}</p>
-          <p>Phone: {doctor.phone}</p>
+        
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <p className="text-xs font-medium text-muted-foreground">Email</p>
+              <p className="text-sm break-all">{doctor.email}</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-xs font-medium text-muted-foreground">Phone</p>
+              <p className="text-sm">{doctor.phone}</p>
+            </div>
+          </div>
+          
+          <div className="flex gap-2 pt-2">
+            <Button size="sm" variant="outline" className="flex-1" onClick={() => setModalOpen(true)}>
+              <Eye className="mr-2 h-4 w-4" /> View
+            </Button>
+            <Button size="sm" variant="secondary" className="flex-1">
+              <Edit className="mr-2 h-4 w-4" /> Edit
+            </Button>
+            <Button size="sm" variant="destructive" className="flex-1">
+              <Trash className="mr-2 h-4 w-4" /> Delete
+            </Button>
+          </div>
         </CardContent>
-        <div className="flex justify-end gap-2 p-2">
-          <Button size="sm" variant="outline" onClick={() => setModalOpen(true)}>
-            <Eye className="mr-1 h-4 w-4" /> View
-          </Button>
-          <Button size="sm" variant="secondary">
-            <Edit className="mr-1 h-4 w-4" /> Edit
-          </Button>
-          <Button size="sm" variant="destructive">
-            <Trash className="mr-1 h-4 w-4" /> Delete
-          </Button>
-        </div>
       </Card>
 
-  
       <DoctorDetailsModal
         doctor={doctor}
         open={isModalOpen}
